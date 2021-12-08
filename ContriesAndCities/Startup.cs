@@ -7,6 +7,8 @@ namespace ContriesAndCities
     using Microsoft.Extensions.Hosting;
 
     using ContriesAndCities.Extensions;
+    using ContriesAndCities.Services;
+    using ContriesAndCities.Services.Implementations;
 
     public class Startup
     {
@@ -22,6 +24,7 @@ namespace ContriesAndCities
             services.AddDbContext(this.Configuration);
             services.AddIdentity();
             services.AddControllersWithViews();
+            services.AddTransient<IContriesService, ContriesService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

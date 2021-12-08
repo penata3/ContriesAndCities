@@ -1,5 +1,6 @@
 ﻿namespace ContriesAndCities.Data
 {
+    using ContriesAndCities.Data.Models;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
@@ -9,5 +10,10 @@
             : base(options)
         {
         }
+
+        public DbSet<Country> Countries { get; set; }
+
+        public DbSet<City> Cities { get; set; }
+
     }
 }
