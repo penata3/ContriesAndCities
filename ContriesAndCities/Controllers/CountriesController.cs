@@ -9,10 +9,14 @@
     public class CountriesController : Controller
     {
         private readonly IContriesService contriesService;
+        private readonly ICitiesService citiesService;
 
-        public CountriesController(IContriesService contriesService)
+        public CountriesController(
+            IContriesService contriesService,
+            ICitiesService citiesService)
         {
             this.contriesService = contriesService;
+            this.citiesService = citiesService;
         }
 
         public async Task<IActionResult> All()
@@ -28,14 +32,14 @@
         [Authorize]
         public IActionResult Add() 
         {
-            var input = new CountryInListViewModel();
+            var input = new CountryViewModel();
             return this.View(input);
         }
 
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Add(CountryInListViewModel model)
+        public async Task<IActionResult> Add(CountryViewModel model)
         {
             if (!this.ModelState.IsValid) 
             {
@@ -44,9 +48,6 @@
 
             await this.contriesService.AddCountry(model.Name);
 
-            var id = string.Empty;
-
-
             return this.RedirectToAction("All");
         }
 
@@ -54,6 +55,13 @@
         public async Task<IActionResult> Details(int id)
         {
             var model = await this.contriesService.CountyById(id);
+            model.Cities = await this.citiesService.GetAllCitiesForGivenCountry(id);
+            return this.View(model);
+        }
+
+        public IActionResult Count(int id = 2)
+        {
+            var model =  this.citiesService.GetAllCitiesForGivenCountry(id);
 
             return this.View(model);
         }

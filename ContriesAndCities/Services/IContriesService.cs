@@ -6,10 +6,10 @@
 
     public interface IContriesService
     {
-       Task<IEnumerable<CountryInListViewModel>> GetAllContries();
+       Task<IEnumerable<CountryViewModel>> GetAllContries();
 
         Task AddCountry(string name);
 
-        Task<CountryInListViewModel> CountyById(int id);
+        Task<CountryViewModel> CountyById(int id);
     }
 }

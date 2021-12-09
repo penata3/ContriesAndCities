@@ -4,6 +4,6 @@
 
     public class CountriesListViewModel
     {
-        public IEnumerable<CountryInListViewModel> Contries { get; set; }
+        public IEnumerable<CountryViewModel> Contries { get; set; }
     }
 }

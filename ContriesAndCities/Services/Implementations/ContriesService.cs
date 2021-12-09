@@ -1,25 +1,28 @@
-﻿using ContriesAndCities.Data;
-using ContriesAndCities.Data.Models;
-using ContriesAndCities.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ContriesAndCities.Services.Implementations
+﻿namespace ContriesAndCities.Services.Implementations
 {
+    using ContriesAndCities.Data;
+    using ContriesAndCities.Data.Models;
+    using ContriesAndCities.Models;
+    using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class ContriesService : IContriesService
     {
         private readonly ApplicationDbContext db;
+        private readonly ICitiesService citiesService;
 
-        public ContriesService(ApplicationDbContext db)
+        public ContriesService(ApplicationDbContext db,
+            ICitiesService citiesService)
         {
             this.db = db;
+            this.citiesService = citiesService;
         }
 
         public async Task AddCountry(string name)
         {
-            if (!this.db.Countries.Any(c => c.Name == name)) 
+            if (!this.db.Countries.Any(c => c.Name == name))
             {
                 var country = new Country
                 {
@@ -31,25 +34,25 @@ namespace ContriesAndCities.Services.Implementations
             }
         }
 
-        public async Task<CountryInListViewModel> CountyById(int id)
+        public async Task<CountryViewModel> CountyById(int id)
         {
-           return  await this.db.Countries.Where(c => c.Id == id).Select(c => new CountryInListViewModel
+            return await this.db.Countries.Where(c => c.Id == id).Select(c => new CountryViewModel
             {
                 Id = c.Id,
-                Name = c.Name,
-
+                Name = c.Name
             }).FirstOrDefaultAsync();
 
         }
 
-        public async Task<IEnumerable<CountryInListViewModel>> GetAllContries()
+        public async Task<IEnumerable<CountryViewModel>> GetAllContries()
         {
-            return await this.db.Countries.Select(c => new CountryInListViewModel
+            return await this.db.Countries.Select(c => new CountryViewModel
             {
                 Id = c.Id,
-                Name = c.Name,
+                Name = c.Name
             })
-                .ToListAsync();
+              .OrderBy(x => x.Name)
+              .ToListAsync();
         }
     }
 }

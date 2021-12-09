@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class CountryInListViewModel
+    public class CountryViewModel
     {
         public int Id { get; set; }
 

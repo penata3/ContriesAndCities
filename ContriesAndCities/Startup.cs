@@ -25,6 +25,7 @@ namespace ContriesAndCities
             services.AddIdentity();
             services.AddControllersWithViews();
             services.AddTransient<IContriesService, ContriesService>();
+            services.AddTransient<ICitiesService, CitiesService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
