@@ -16,7 +16,7 @@
 
         public IActionResult Index()
         {
-            return View();
+            return this.RedirectToAction("All", "Countries");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

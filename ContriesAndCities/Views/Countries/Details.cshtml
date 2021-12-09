@@ -4,12 +4,24 @@
     @Model.Name
 </h1> 
 
-<button class="btn btn btn-primary">
-    <a asp-action="Add" asp-controller="Cities" asp-route-countryId="@Model.Id">Add City</a>
-</button>
+<a  asp-action="Add" asp-controller="Cities" asp-route-countryId="@Model.Id" class="btn btn btn-primary">
+    Add City
+</a>
 
-@foreach (var city in Model.Cities)
-{
-    <p>@city.Name</p>
-}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">City Name</th>
+        </tr>
+    </thead>
+
+    @foreach (var city in Model.Cities)
+    {
+        <tr>
+            <td>@city.Name</td>
+        </tr>
+
+    }
+
+</table>
 

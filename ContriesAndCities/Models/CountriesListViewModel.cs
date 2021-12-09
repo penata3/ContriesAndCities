@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class CountriesListViewModel
+    public class CountriesListViewModel : PaginationViewModel
     {
         public IEnumerable<CountryViewModel> Contries { get; set; }
     }

@@ -2,6 +2,7 @@
 {
     using ContriesAndCities.Models;
     using ContriesAndCities.Services;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@
             this.citiesService = citiesService;
         }
         
+        [Authorize]
         public IActionResult Add()
         {
             var model = new CityInputModel();
@@ -21,6 +23,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(CityInputModel model,int countryId)
         {
             if (!ModelState.IsValid)
@@ -33,7 +36,7 @@
 
             await this.citiesService.AddCity(model.Name, countryId);
 
-            return this.RedirectToAction("All", "Countries");
+            return this.RedirectToAction("Details", "Countries", new { @id = countryId });
         }
     }
 }

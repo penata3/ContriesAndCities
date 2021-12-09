@@ -1,13 +1,12 @@
 ﻿@model CountriesListViewModel
-
+@inject ContriesAndCities.Services.ICitiesService service
 
 
 <h1>
-    Hello from All Countries
+    All Countries
 </h1>
-<button >
-    <a asp-controller="Countries" asp-action="Add">Add Country</a>
-</button>
+<a asp-controller="Countries" asp-action="Add" class="btn btn-primary mb-2">Add Country</a>
+
 
 <table class="table table-hover">
     <thead>
@@ -16,21 +15,26 @@
             <th scope="col">Number of Cities</th>
             <th scope="col"></th>
         </tr>
-        @foreach (var country in Model.Contries)
-        {
-    <tr>
-        <td>
-            @country.Name
-        </td>
-        <td>
-          0
-        </td>
-
-        <td>
-            <a asp-controller="Countries" asp-action="Details"  asp-route-id="@country.Id">Details</a>
-        </td>
-    </tr>
-        }
     </thead>
-  
+    @foreach (var country in Model.Contries)
+    {
+        <tr>
+            <td>
+                @country.Name
+            </td>
+            <td>
+                @service.GetCountOfCitiesForGivenCountry(country.Id)
+            </td>
+
+            <td>
+                <a asp-controller="Countries" asp-action="Details" asp-route-id="@country.Id">Details</a>
+            </td>
+        </tr>
+    }
+
+
 </table>
+
+
+<hr />
+<partial name="_PaginationPartial" model="@Model" />

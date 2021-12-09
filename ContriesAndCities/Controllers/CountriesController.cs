@@ -19,14 +19,23 @@
             this.citiesService = citiesService;
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(int id = 1)
         {
-            var countries = new CountriesListViewModel
+
+            const int ItemsPerPage = 6;
+            var count = this.contriesService.GetCount();
+
+            var model = new CountriesListViewModel
             {
-                Contries = await this.contriesService.GetAllContries(),
+                PageNumber = id,
+                Contries = await this.contriesService.GetAllContries(id, ItemsPerPage),
+                ItemsCount = this.contriesService.GetCount(),
+                ItemsPerPage = ItemsPerPage,
+                ActionName = nameof(this.All)
             };
-            
-            return this.View(countries);
+
+            var it = string.Empty;
+            return this.View(model);
         }
 
         [Authorize]
@@ -62,7 +71,6 @@
         public IActionResult Count(int id = 2)
         {
             var model =  this.citiesService.GetAllCitiesForGivenCountry(id);
-
             return this.View(model);
         }
     }

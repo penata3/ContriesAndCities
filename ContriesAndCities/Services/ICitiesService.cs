@@ -9,5 +9,7 @@
         Task<IEnumerable<CityViewModel>> GetAllCitiesForGivenCountry(int countryId);
 
         Task AddCity(string name, int countyId);
+
+        int GetCountOfCitiesForGivenCountry(int countryId);
     }
 }

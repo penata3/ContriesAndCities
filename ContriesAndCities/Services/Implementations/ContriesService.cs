@@ -44,15 +44,22 @@
 
         }
 
-        public async Task<IEnumerable<CountryViewModel>> GetAllContries()
+        public async Task<IEnumerable<CountryViewModel>> GetAllContries(int page, int itemsPerPage)
         {
-            return await this.db.Countries.Select(c => new CountryViewModel
+            return await this.db.Countries
+                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                .Select(c => new CountryViewModel
             {
                 Id = c.Id,
                 Name = c.Name
             })
               .OrderBy(x => x.Name)
               .ToListAsync();
+        }
+
+        public int GetCount()
+        {
+            return this.db.Countries.Count();
         }
     }
 }

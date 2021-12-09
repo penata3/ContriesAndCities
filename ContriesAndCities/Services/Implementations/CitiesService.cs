@@ -42,5 +42,10 @@
                    })
                    .ToListAsync();
         }
+
+        public int GetCountOfCitiesForGivenCountry(int counryId)
+        {
+            return this.db.Cities.Where(c => c.CountryId == counryId).Count();
+        }
     }
 }
