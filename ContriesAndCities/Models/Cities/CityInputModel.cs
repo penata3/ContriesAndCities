@@ -7,8 +7,9 @@
     {
         [Required]
         [ExistingName]
+        [Display(Name = "City name")]
         [MinLength(3, ErrorMessage = "City name is too short")]
-        [MaxLength(20,ErrorMessage = "City name is too long")]
+        [MaxLength(20, ErrorMessage = "City name is too long")]
         public string Name { get; set; }
 
         public int CountryId { get; set; }

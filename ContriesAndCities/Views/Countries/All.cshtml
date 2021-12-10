@@ -2,39 +2,40 @@
 @inject ContriesAndCities.Services.ICitiesService service
 
 
-<h1>
-    All Countries
-</h1>
+    <h1>
+        All Countries
+    </h1>
 
-<a asp-controller="Countries" asp-action="Add" class="btn btn-primary mb-2">Add Country</a>
-
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Country Name</th>
-            <th scope="col">Number of Cities</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    @foreach (var country in Model.Contries)
-    {
-        <tr>
-            <td>
-                @country.Name
-            </td>
-            <td>
-                @service.GetCountOfCitiesForGivenCountry(country.Id)
-            </td>
-
-            <td>
-                <a asp-controller="Countries" asp-action="Details" asp-route-id="@country.Id">View Cities</a>
-            </td>
-        </tr>
-    }
+    <a asp-controller="Countries" asp-action="Add" class="btn btn-primary mb-2">Add Country</a>
 
 
-</table>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Country Name</th>
+                <th scope="col">Number of Cities</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        @foreach (var country in Model.Contries)
+        {
+            <tr>
+                <td>
+                    @country.Name
+                </td>
+                <td>
+                    @service.GetCountOfCitiesForGivenCountry(country.Id)
+                </td>
+
+                <td>
+                    <a asp-controller="Countries" asp-action="Details" asp-route-id="@country.Id">View Cities</a>
+                </td>
+            </tr>
+        }
 
 
-<hr />
-<partial name="_PaginationPartial" model="@Model" />
+    </table>
+
+
+    <hr />
+    <partial name="_PaginationPartial" model="@Model" />

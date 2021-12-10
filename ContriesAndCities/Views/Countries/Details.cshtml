@@ -2,11 +2,14 @@
 
 <h1>
     @Model.Name
-</h1> 
+</h1>
 
-
+<a asp-action="Add" asp-controller="Cities" asp-route-countryId="@Model.Id" class="btn btn btn-primary mb-2">
+    Add City
+</a>
 
 <table class="table table-hover">
+
     <thead>
         <tr>
             <th scope="col">City Name</th>
@@ -18,12 +21,8 @@
         <tr>
             <td>@city.Name</td>
         </tr>
-
     }
 
 </table>
 
-<a asp-action="Add" asp-controller="Cities" asp-route-countryId="@Model.Id" class="btn btn btn-primary mb-2">
-    Add City
-</a>
 
