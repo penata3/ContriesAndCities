@@ -24,23 +24,20 @@
 
         public async Task AddCity(string name, int countyId)
         {
-            if (!this.db.Cities.Any(c => c.Name == name) && !this.db.Countries.Any(c => c.Name == name))
+            var city = new City
             {
-                var city = new City
-                {
-                    Name = name,
-                    CountryId = countyId
-                };
+                Name = name,
+                CountryId = countyId
+            };
 
-                await this.db.Cities.AddAsync(city);
-                await this.db.SaveChangesAsync();
-            }
+            await this.db.Cities.AddAsync(city);
+            await this.db.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<CityViewModel>> GetAllCitiesForGivenCountry(int countryId)
         {
             return await this.db.Cities.Where(c => c.CountryId == countryId)
-                .Select(c => this.mapper.Map<CityViewModel>(c))                 
+                .Select(c => this.mapper.Map<CityViewModel>(c))
                    .ToListAsync();
         }
 
