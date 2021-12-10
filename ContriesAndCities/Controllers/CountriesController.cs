@@ -1,6 +1,7 @@
 ﻿namespace ContriesAndCities.Controllers
 {
     using ContriesAndCities.Models;
+    using ContriesAndCities.Models.Countries;
     using ContriesAndCities.Services;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -41,14 +42,14 @@
         [Authorize]
         public IActionResult Add() 
         {
-            var input = new CountryViewModel();
+            var input = new CountryInputModel();
             return this.View(input);
         }
 
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Add(CountryViewModel model)
+        public async Task<IActionResult> Add(CountryInputModel model)
         {
             if (!this.ModelState.IsValid) 
             {

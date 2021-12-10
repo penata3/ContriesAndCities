@@ -30,10 +30,7 @@
             {
                 return this.View(model);
             }
-
-            var sss = string.Empty;
-          
-
+         
             await this.citiesService.AddCity(model.Name, countryId);
 
             return this.RedirectToAction("Details", "Countries", new { @id = countryId });

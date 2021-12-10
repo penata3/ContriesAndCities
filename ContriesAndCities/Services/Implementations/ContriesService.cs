@@ -1,5 +1,6 @@
 ﻿namespace ContriesAndCities.Services.Implementations
 {
+    using AutoMapper;
     using ContriesAndCities.Data;
     using ContriesAndCities.Data.Models;
     using ContriesAndCities.Models;
@@ -12,12 +13,15 @@
     {
         private readonly ApplicationDbContext db;
         private readonly ICitiesService citiesService;
+        private readonly IMapper mapper;
 
         public ContriesService(ApplicationDbContext db,
-            ICitiesService citiesService)
+            ICitiesService citiesService,
+            IMapper mapper)
         {
             this.db = db;
             this.citiesService = citiesService;
+            this.mapper = mapper;
         }
 
         public async Task AddCountry(string name)
@@ -36,24 +40,20 @@
 
         public async Task<CountryViewModel> CountyById(int id)
         {
-            return await this.db.Countries.Where(c => c.Id == id).Select(c => new CountryViewModel
-            {
-                Id = c.Id,
-                Name = c.Name
-            }).FirstOrDefaultAsync();
+
+
+            return await this.db.Countries.Where(c => c.Id == id)
+                .Select(c => this.mapper.Map<CountryViewModel>(c))
+                .FirstOrDefaultAsync();
 
         }
 
         public async Task<IEnumerable<CountryViewModel>> GetAllContries(int page, int itemsPerPage)
         {
             return await this.db.Countries
+                .OrderBy(x => x.Name)
                 .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-                .Select(c => new CountryViewModel
-            {
-                Id = c.Id,
-                Name = c.Name
-            })
-              .OrderBy(x => x.Name)
+                .Select(c => this.mapper.Map<CountryViewModel>(c))
               .ToListAsync();
         }
 
