@@ -7,9 +7,6 @@ namespace ContriesAndCities
     using Microsoft.Extensions.Hosting;
 
     using ContriesAndCities.Extensions;
-    using ContriesAndCities.Services;
-    using ContriesAndCities.Services.Implementations;
-    using AutoMapper;
 
     public class Startup
     {
@@ -22,22 +19,11 @@ namespace ContriesAndCities
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var mapperConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new MappingProfile());
-            });
-
-            IMapper mapper = mapperConfig.CreateMapper();
-
-            services.AddSingleton(mapper);
+            services.ConfigureAutoMapper();
             services.AddDbContext(this.Configuration);
-            services.AddIdentity();
-            
+            services.AddIdentity();            
             services.AddControllersWithViews();
-          
-            services.AddTransient<IContriesService, ContriesService>();
-            services.AddTransient<ICitiesService, CitiesService>();
-            
+            services.AddCustomServices();     
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

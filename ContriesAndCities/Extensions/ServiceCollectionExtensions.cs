@@ -1,6 +1,9 @@
 ﻿namespace ContriesAndCities.Extensions
 {
+    using AutoMapper;
     using ContriesAndCities.Data;
+    using ContriesAndCities.Services;
+    using ContriesAndCities.Services.Implementations;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -21,7 +24,6 @@
 
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
-
             services.AddDefaultIdentity<IdentityUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -32,6 +34,27 @@
             }
             )
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomServices(this IServiceCollection services)
+        {
+            services.AddTransient<IContriesService, ContriesService>();
+            services.AddTransient<ICitiesService, CitiesService>();
+
+            return services;
+        }
+
+        public static IServiceCollection ConfigureAutoMapper(this IServiceCollection services)
+        {
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             return services;
         }
